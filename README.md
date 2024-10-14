@@ -21,8 +21,8 @@ This application is a web-based platform designed to manage data for Vermilion, 
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/vermiliondata.git
-    cd vermiliondata
+    git clone https://github.com/trevour66/vermillion_data.git
+    cd vermillion_data
     ```
 
 2. Install dependencies:
