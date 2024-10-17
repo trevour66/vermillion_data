@@ -3,9 +3,9 @@ import { initFlowbite, initModals } from "flowbite";
 import { computed, onMounted, reactive, ref } from "vue";
 import axios from "axios";
 import { router } from "@inertiajs/vue3";
+import { useCookies } from "@vueuse/integrations/useCookies";
 
-axios.defaults.withCredentials = true;
-axios.defaults.withXSRFToken = true;
+const cookies = useCookies();
 
 const websites_input = ref("");
 
@@ -43,7 +43,15 @@ const submitWebsite = async () => {
     success_submittingData.value = false;
 
     const splitedWebsites = websites_input.value?.split(",") ?? null;
-    console.log(splitedWebsites);
+    // console.log(splitedWebsites);
+
+    const XSRF_TOKEN = cookies.get("XSRF-TOKEN") ?? null;
+
+    // const header = {
+
+    // }
+
+    // XSRF-TOKEN cookie in the X-XSRF-TOKEN header.
 
     axios
         .post(route("dashboard.add_websites_api"), {
