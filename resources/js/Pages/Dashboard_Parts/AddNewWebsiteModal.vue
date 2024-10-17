@@ -4,6 +4,9 @@ import { computed, onMounted, reactive, ref } from "vue";
 import axios from "axios";
 import { router } from "@inertiajs/vue3";
 
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
+
 const websites_input = ref("");
 
 const submittingData = ref(false);
