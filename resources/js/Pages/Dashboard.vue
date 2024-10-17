@@ -29,7 +29,11 @@ onMounted(() => {
     const XSRF_TOKEN = cookies.get("XSRF-TOKEN") ?? null;
     // console.log(XSRF_TOKEN);
 
-    if (typeof XSRF_TOKEN === "undefined" || XSRF_TOKEN == null) {
+    if (
+        typeof XSRF_TOKEN === "undefined" ||
+        XSRF_TOKEN == null ||
+        XSRF_TOKEN == ""
+    ) {
         axios
             .get("/sanctum/csrf-cookie")
             .then((res) => {})

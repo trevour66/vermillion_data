@@ -71,7 +71,7 @@ const submitWebsite = async () => {
             console.log(err);
 
             if (
-                err.status == 419 &&
+                (err.status == 419 || err.status == 419) &&
                 (err.response.data?.message ?? "").indexOf(
                     "CSRF token mismatch"
                 ) >= 0
