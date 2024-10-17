@@ -78,7 +78,7 @@ const submitWebsite = async () => {
                 ) >= 0
             ) {
                 await reAuth();
-                return;
+                // return;
             }
 
             error_submittingData.value = true;
@@ -150,6 +150,15 @@ onMounted(() => {
                 <!-- Modal body -->
                 <div class="p-4 md:p-5 space-y-4">
                     <div
+                        v-if="error_submittingData"
+                        class="py-2 max-w-sm mx-auto text-xs"
+                    >
+                        <p class="font-semibold mt-2 text-red-800">
+                            There was an error please try again
+                        </p>
+                    </div>
+
+                    <div
                         v-if="improperly_formatted_domains_string !== ''"
                         class="py-2 max-w-sm mx-auto text-xs"
                     >
@@ -161,6 +170,7 @@ onMounted(() => {
                             {{ improperly_formatted_domains_string }}
                         </p>
                     </div>
+
                     <form class="max-w-sm mx-auto my-4">
                         <textarea
                             v-model="websites_input"
@@ -172,9 +182,9 @@ onMounted(() => {
                             id="helper-text-explanation"
                             class="mt-2 text-xs text-gray-500 dark:text-gray-400"
                         >
-                            Please use the format www.abc.xyx(i.e. www.[the
-                            domain name]) for the websites. Also, multiple
-                            websites can be seperated buy a comma(,).
+                            Please use only the domain name of the websites.
+                            Also, multiple websites can be seperated buy a
+                            comma(,).
                         </p>
                     </form>
                 </div>
