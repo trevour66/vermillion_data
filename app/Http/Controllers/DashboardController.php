@@ -42,8 +42,10 @@ class DashboardController extends Controller
             foreach ($validated['websites'] as $key => $value) {
                 logger($value);
 
-                if ($this->validateDomain($value)) {
-                    $formatted_website_name = "www." . $value;
+                $domain = $this->validateDomain($value);
+
+                if ($domain) {
+                    $formatted_website_name = "www." . $domain;
 
                     logger('accepted');
                     Company_Database::updateOrCreate(
@@ -51,7 +53,7 @@ class DashboardController extends Controller
                         ['website' => $formatted_website_name]
                     );
 
-                    array_push($properly_formatted_domains, [$value]);
+                    array_push($properly_formatted_domains, [$formatted_website_name]);
                 } else {
                     logger('not accepted');
                     array_push($improperly_formatted_domains, $value);
@@ -74,18 +76,76 @@ class DashboardController extends Controller
 
     private function validateDomain($domain)
     {
+        $domain = $this->removePrefix_HTTP_HTTPS_WWW($domain);
+        // logger($domain);
+        $domain = $this->removeQueryParams($domain);
+        // logger($domain);
+
+        if (!$domain) {
+            return false;
+        }
+
         $isDomainValid = (bool) preg_match('/^(?!https?:\/\/)(?!www\.)(?!\-)(?:[a-zA-Z0-9\-]{1,63}\.)+(?:[a-zA-Z]{2,63})$/', $domain);
 
+        // logger($isDomainValid);
+
         if ($isDomainValid) {
-            return true;
+            return $domain;
         } else {
             return false;
         }
     }
 
+    private function removePrefix_HTTP_HTTPS_WWW($website)
+    {
+        $website = strtolower($website);
+
+        // logger('here');
+
+        if (strpos($website, 'www.') === 0) {
+            $website = substr($website, strlen('www.'));
+            // logger($website);
+            return $this->removePrefix_HTTP_HTTPS_WWW($website);
+        }
+
+        if (strpos($website, 'http://') === 0) {
+            $website = substr($website, strlen('http://'));
+            // logger($website . 'http://');
+            return $this->removePrefix_HTTP_HTTPS_WWW($website);
+        }
+
+        if (strpos($website, 'https://') === 0) {
+            $website = substr($website, strlen('https://'));
+            // logger($website . 'https://');
+            return $this->removePrefix_HTTP_HTTPS_WWW($website);
+        }
+
+        return $website;
+    }
+
+    private function removeQueryParams($website)
+    {
+        $website = strtolower($website);
+        $website = explode('/', $website);
+
+        $website = $website[0] ?? '';
+
+        if ($website === '') return false;
+
+        $website = explode('?', $website);
+
+        // logger($website);
+
+        return $website[0] ?? false;
+    }
+
     private function sendToSheet($data)
     {
         try {
+            $data = (array) $data;
+
+            if (count($data) == 0) return;
+
             $GOOGLE_APP_SCRIPT_URL =  env('GOOGLE_APP_SCRIPT_URL', null);
 
             if ($GOOGLE_APP_SCRIPT_URL == null) {
