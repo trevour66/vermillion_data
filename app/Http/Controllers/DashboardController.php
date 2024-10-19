@@ -86,7 +86,7 @@ class DashboardController extends Controller
     private function sendToSheet($data)
     {
         try {
-            $GOOGLE_APP_SCRIPT_URL =  env('APP_NAME', null);
+            $GOOGLE_APP_SCRIPT_URL =  env('GOOGLE_APP_SCRIPT_URL', null);
 
             if ($GOOGLE_APP_SCRIPT_URL == null) {
                 throw new Error('GOOGLE_APP_SCRIPT_URL not in .env');
