@@ -128,7 +128,7 @@ const submit = () => {
                                     class="leading-relaxed text-center text-gray-500 mt-2.5"
                                 >
                                     The form enables you compare your list of
-                                    websites with the website available in our
+                                    websites with the websites available in our
                                     database. The aim is to identify duplicates.
                                 </p>
 
@@ -159,7 +159,7 @@ const submit = () => {
                             <h2
                                 class="text-2xl font-bold leading-tight text-black sm:text-3xl"
                             >
-                                Upload list of website
+                                Upload list of websites
                             </h2>
                             <p class="mt-2 text-base text-gray-600">
                                 Currently we support csv and excel file format
