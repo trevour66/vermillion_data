@@ -193,9 +193,10 @@ onMounted(() => {
                             id="helper-text-explanation"
                             class="mt-2 text-xs text-gray-500 dark:text-gray-400"
                         >
-                            Please use only the domain name of the websites.
-                            Also, multiple websites can be seperated buy a
-                            comma(,).
+                            NOTE: Any URL accepted by a broswer can be used here
+                            but the system will only grab the domain. Also,
+                            multiple URLs can be seperated buy a comma(,).
+                            Ensure that there are no comma(s) in individual URLs
                         </p>
                     </form>
                 </div>
