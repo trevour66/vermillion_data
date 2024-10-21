@@ -31,7 +31,7 @@ Route::middleware('guest')->group(function () {
 
 
     // Disabled User registration
-    return;
+    // return;
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
 
